@@ -291,6 +291,257 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/PHP编码规范/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yybei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web攻城狮">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/19/PHP编码规范/" itemprop="url">PHP实用核心技术视频教程-PHP编码规范</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T16:20:40+08:00">
+                2019-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h2><h3 id="不好的命名"><a href="#不好的命名" class="headerlink" title="不好的命名"></a>不好的命名</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun1</span><span class="params">($var)</span> </span>&#123;</span><br><span class="line">    $a = strrpos($var, <span class="string">'.'</span>);</span><br><span class="line">    $b = substr($var, $a+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> $b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="好的命名"><a href="#好的命名" class="headerlink" title="好的命名"></a>好的命名</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUserInfoByUid</span><span class="params">($uid)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//一眼望去就知道这个是通过uid获取用户信息</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>命名规范的注意事项：</p>
+</blockquote>
+<ul>
+<li>命名要有实际含义</li>
+<li>命名风格保持一致</li>
+<li>不用拼音命名</li>
+<li>不用语言关键字命名</li>
+</ul>
+<blockquote>
+<p>适当使用注释：</p>
+</blockquote>
+<ul>
+<li>好的代码应该是自描述的（一看到函数名就知道函数作用）</li>
+<li>难以理解的地方加上注释</li>
+<li>函数的功能加上注释说明</li>
+<li>类的功能和使用方法加注释</li>
+</ul>
+<blockquote>
+<p>坚持字符编码统一：</p>
+</blockquote>
+<ul>
+<li>PHP编码 == 模板编码 == 数据库编码 （一般都是utf-8）</li>
+</ul>
+<blockquote>
+<p>命名规范的注意事项：</p>
+</blockquote>
+<ul>
+<li>命名要有实际含义</li>
+<li>命名风格保持一致</li>
+<li>不用拼音命名</li>
+<li>不用语言关键字命名</li>
+</ul>
+<blockquote>
+<p>变量使用之前需要初始化：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getInfo</span><span class="params">($uid)</span> </span>&#123;</span><br><span class="line">    $list = []; <span class="comment">//提前声明</span></span><br><span class="line">    ...</span><br><span class="line">    $list[] = $info; <span class="comment">//提前看见过声明知道这里是给空数组增加一个新的元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用未定义的变量比使用一个定义好的变量速度上要慢8倍</li>
+<li>使用未定义的变量会抛出NOTICE错误</li>
+<li>在开头的时候初始化可以增加代码的可读性</li>
+</ul>
+<blockquote>
+<p>用 ‘NULL ===’ 替代 is_null：</p>
+</blockquote>
+<ul>
+<li>可以避免调用函数，减少内存资源的占用</li>
+</ul>
+<blockquote>
+<p>用 ‘===’ 替代 ’==‘ ：</p>
+</blockquote>
+<ul>
+<li>同时比较值和类型</li>
+</ul>
+<blockquote>
+<p>避免在for循环的条件中进行计算：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$length = strlen($str) <span class="comment">//把条件比较提取出来从而减少运算次数</span></span><br><span class="line"><span class="keyword">for</span>($i = <span class="number">0</span>; $i &lt; $length; $i++) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>strtr 替代 str_replace：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$subject = <span class="string">'hello, world'</span>;</span><br><span class="line"><span class="keyword">echo</span> strtr($subject, <span class="keyword">array</span>(<span class="string">'hello'</span> =&gt; <span class="string">'world'</span>, <span class="string">'world'</span> =&gt; <span class="string">'hello'</span>));</span><br><span class="line"><span class="keyword">echo</span> str_replace([<span class="string">'hello'</span>=&gt;<span class="string">'world'</span>], [<span class="string">'world'</span>=&gt;<span class="string">'hello'</span>, $subject]);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>前者的效率是后者的四倍</li>
+</ul>
+<blockquote>
+<p>优先使用单引号：</p>
+</blockquote>
+<ul>
+<li>单引号中的反斜杠无法进行字符转义（字符中的反斜杠除外）</li>
+<li>双引号可以解析转义字符和变量，但是运行效率相对于单引号而言会更低</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$test = <span class="string">'abc'</span>;</span><br><span class="line"><span class="comment">//以后两种都可以被解析</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"$test's test"</span>; <span class="comment">// ’ 在变量名中是无效的</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&#123;$test&#125;s test"</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在项目的入口文件加入header头：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header(<span class="string">'Content-type: text/html; charset=utf-8'</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>测试环境中开启所有错误，上线后关闭所有错误，避免使用@屏蔽错误：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">error_reporting(<span class="number">7</span>) <span class="comment">//开启所有错误</span></span><br><span class="line"><span class="comment">//0: all close</span></span><br><span class="line"><span class="comment">//1: E_RROR</span></span><br><span class="line"><span class="comment">//2: E_WARNING</span></span><br><span class="line"><span class="comment">//3: E_PARSE</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ini_set(<span class="string">'display_errors'</span>, <span class="keyword">false</span>);</span><br><span class="line"><span class="keyword">if</span> (in_array($_SERVER [<span class="string">'ENV'</span>], <span class="keyword">array</span>(<span class="string">'test'</span>, <span class="string">'dev'</span>, <span class="string">'local'</span>))) &#123;</span><br><span class="line">    error_reporting(E_ALL);</span><br><span class="line">    ini_set(<span class="string">'display_errors'</span>, <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用 @ 屏蔽错误后，对于解决程序运行过程中所发生的问题会产生负面影响，干扰问题判断</li>
+<li>上线后应关闭所有错误的同时，把错误代码写入到错误日志中，方便查错</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (<span class="keyword">Exception</span> $e) &#123;</span><br><span class="line">    Tool_Log::warning(<span class="keyword">__METHOD__</span>.<span class="string">"code: "</span>.$e-&gt;getCode().<span class="string">"msg: "</span>.$e-&gt;getMessage());</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>用FALSE表示错误，用NULL表示不存在</p>
+</blockquote>
+<ul>
+<li>操作类的函数，失败返回FALSE，表示操作失败</li>
+<li>查询类的函数，没有找到想要的值返回NULL，表示“找不到”</li>
+</ul>
+<blockquote>
+<p>优先使用PHP内置函数，减少正则的使用（正则效率较低）</p>
+</blockquote>
+<ul>
+<li>filter_var(<a href="mailto:&#39;zhangsan@163.com" target="_blank" rel="noopener">&#39;zhangsan@163.com</a>‘, FILTER_VALIDATE_EMAIL); 判断字符串是否包含邮箱字段，成功返回符合的部分，失败返回false<ol>
+<li>FILTER_VALIDATE_EMAIL 邮箱</li>
+<li>FILTER_VALIDATE_BOOLEAN Boolean值</li>
+<li>FILTER_VALIDATE_DOMAIN 域名</li>
+<li>FILTER_VALIDATA_FLOAT 浮点数</li>
+<li>FILTER_VALIDATE_INT 整数</li>
+<li>FILTER_VALIDATE_IP IP地址</li>
+<li>FILTER_VALIDATE_MAC MAC地址</li>
+<li>FILTER_VALIDATE_REGEXP 正则表达式</li>
+<li>FILTER_VALIDATE_URL url地址</li>
+</ol>
+</li>
+<li>parse_url(string $url [, $component]) 解析url，返回其中的组成部分</li>
+<li>http_build_query(mixed $query[, string, $numeric_prefix [, string $arg_separator [, …]]]) 生成URL-encode之后的请求字符串（常用于curl,避免请求参数编码错误）</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$data = <span class="keyword">array</span>(<span class="string">'foo'</span> =&gt; <span class="string">'bar'</span>,</span><br><span class="line">              <span class="string">'baz'</span> =&gt; <span class="string">'boom'</span>,</span><br><span class="line">              <span class="string">'cow'</span> =&gt; <span class="string">'milk'</span>);</span><br><span class="line"><span class="keyword">echo</span> http_build_query($data) . <span class="string">"\n"</span>; <span class="comment">//foo=bar&amp;baz=boom&amp;cow=milk</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>exoif_imagetype(string $filename) 判断一个图像的类型</li>
+<li>uniqiid([string $prefix=””[, bool $more_entropy = false]]) 生成一个唯一ID(可带前缀，基于当前时间微秒数，但是服务系统时间有时候可能发生变化，建议用more_entropy来增加唯一性的概率)</li>
+<li>get_browser([string $user_agent [, bool $return_array = false]]) 获取浏览器的相关信息(第二个参数控制返回值为对象还是数组)</li>
+</ul>
+<blockquote>
+<p>防御式编程思想</p>
+</blockquote>
+<ul>
+<li>默认所有的外部输入内容都带有攻击性</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$username = htmlspecialchars($_GET[<span class="string">'username'</span>]);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>使用pdo操作MySQL</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 写法一 */</span></span><br><span class="line">$sql = <span class="string">"select * from chapter where id=:id"</span>;</span><br><span class="line"><span class="comment">// 预处理SQL语句</span></span><br><span class="line">$res = $db-&gt;prepare($sql);</span><br><span class="line"><span class="comment">// 执行SQL</span></span><br><span class="line"><span class="keyword">if</span> ($res-&gt;execute([<span class="string">":id"</span> =&gt; <span class="number">1</span>])) &#123;</span><br><span class="line">    <span class="comment">// 获取一行结果集</span></span><br><span class="line">    $row = $res-&gt;fetch();</span><br><span class="line">    print_r($row);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 写法二 */</span></span><br><span class="line">$sql = <span class="string">"select * from chapter where id=? and status=?"</span>;</span><br><span class="line"><span class="comment">// 预处理SQL语句</span></span><br><span class="line">$res = $db-&gt;prepare($sql);</span><br><span class="line"><span class="comment">// 执行SQL</span></span><br><span class="line"><span class="keyword">if</span> ($res-&gt;execute([<span class="number">2</span>, <span class="number">1</span>])) &#123;</span><br><span class="line">    <span class="comment">// 获取一行结果集</span></span><br><span class="line">    $row = $res-&gt;fetch();</span><br><span class="line">    print_r($row);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -452,7 +703,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
