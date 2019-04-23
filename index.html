@@ -449,7 +449,328 @@
 </ul>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$username = **htmlspecialchars**($_GET[<span class="string">'username'</span>]);</span><br></pre></td></tr></table></figure>
 <h2 id="使用pdo操作MySQL"><a href="#使用pdo操作MySQL" class="headerlink" title="使用pdo操作MySQL"></a>使用pdo操作MySQL</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 写法一 */</span></span><br><span class="line">$sql = <span class="string">"select * from chapter where id=:id"</span>;</span><br><span class="line"><span class="comment">// 预处理SQL语句</span></span><br><span class="line">$res = $db-&gt;prepare($sql);</span><br><span class="line"><span class="comment">// 执行SQL</span></span><br><span class="line"><span class="keyword">if</span> ($res-&gt;execute([<span class="string">":id"</span> =&gt; <span class="number">1</span>])) &#123;</span><br><span class="line">    <span class="comment">// 获取一行结果集</span></span><br><span class="line">    $row = $res-&gt;fetch();</span><br><span class="line">    print_r($row);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 写法二 */</span></span><br><span class="line">$sql = <span class="string">"select * from chapter where id=? and status=?"</span>;</span><br><span class="line"><span class="comment">// 预处理SQL语句</span></span><br><span class="line">$res = $db-&gt;prepare($sql);</span><br><span class="line"><span class="comment">// 执行SQL</span></span><br><span class="line"><span class="keyword">if</span> ($res-&gt;execute([<span class="number">2</span>, <span class="number">1</span>])) &#123;</span><br><span class="line">    <span class="comment">// 获取一行结果集</span></span><br><span class="line">    $row = $res-&gt;fetch();</span><br><span class="line">    print_r($row);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="逗号和点号"><a href="#逗号和点号" class="headerlink" title="逗号和点号"></a>逗号和点号</h2><ul>
+<li>逗号的执行效率优于点号</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$foo = <span class="string">'hello'</span>;</span><br><span class="line">$bar = <span class="string">'world'</span>;</span><br><span class="line"><span class="keyword">echo</span> $foo . $bar;</span><br><span class="line"><span class="keyword">echo</span> $foo , $bar; <span class="comment">//执行效率更高</span></span><br></pre></td></tr></table></figure>
+<h2 id="更快速的判断字符串长度"><a href="#更快速的判断字符串长度" class="headerlink" title="更快速的判断字符串长度"></a>更快速的判断字符串长度</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$str = <span class="string">'hello'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (strlen($str) === <span class="number">5</span>) <span class="keyword">echo</span> <span class="string">'do sth...'</span>;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>($str[<span class="number">5</span>])) <span class="keyword">echo</span> <span class="string">'do sth...'</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>strlen()函数的底层实现了在zval结构中存储已知字符串的长度，所以执行起来相当地快，但是由于strlen()是一个函数，所以建议用<strong>isset</strong>来进行替换</li>
+</ul>
+<h2 id="使用-代替-array"><a href="#使用-代替-array" class="headerlink" title="使用 [] 代替 array()"></a>使用 [] 代替 array()</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 写法一 */</span></span><br><span class="line">$arr = <span class="keyword">array</span>();</span><br><span class="line">$arr = <span class="keyword">array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 写法二 &gt;5.3 */</span></span><br><span class="line">$arr = [];</span><br><span class="line">$arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br></pre></td></tr></table></figure>
+<h2 id="用…定义变长参数函数"><a href="#用…定义变长参数函数" class="headerlink" title="用…定义变长参数函数"></a>用…定义变长参数函数</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addAll</span><span class="params">(...$num)</span> </span>&#123;</span><br><span class="line">    $sum = array_sum($num);</span><br><span class="line">    <span class="keyword">return</span> $sum;</span><br><span class="line">&#125;</span><br><span class="line">addAll(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="尽可能不要用eval"><a href="#尽可能不要用eval" class="headerlink" title="尽可能不要用eval()"></a>尽可能不要用eval()</h2><ul>
+<li>eval()能够执行所有PHP的代码，具有较大的风险隐患</li>
+</ul>
 
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/PHP语法糖/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yybei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web攻城狮">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/19/PHP语法糖/" itemprop="url">PHP实用核心技术视频教程-PHP语法糖</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T16:20:40+08:00">
+                2019-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="语法糖"><a href="#语法糖" class="headerlink" title="语法糖"></a>语法糖</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><ul>
+<li>计算机语言中添加的某种语法，这种语法对语言的功能并没有影响，但是更方便程序员使用。</li>
+</ul>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ul>
+<li>方便程序员进行编码</li>
+<li>增加代码可读性</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>语法糖虽然带有括号，但他是语言结构，而不是函数</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun1</span><span class="params">($var)</span> </span>&#123;</span><br><span class="line">    $a = strrpos($var, <span class="string">'.'</span>);</span><br><span class="line">    $b = substr($var, $a+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> $b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="常见语法糖"><a href="#常见语法糖" class="headerlink" title="常见语法糖"></a>常见语法糖</h3><ul>
+<li>echo()</li>
+<li>print()</li>
+<li>die()</li>
+<li>isset()</li>
+<li>unset()</li>
+<li>include()</li>
+<li>include_once()</li>
+<li>require()</li>
+<li>require_once()</li>
+<li>array()</li>
+<li>list()</li>
+<li>empty()</li>
+<li>eval()</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/Suhosin介绍与安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yybei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web攻城狮">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/19/Suhosin介绍与安装/" itemprop="url">PHP实用核心技术视频教程-利用Sohusin提高PHP系统的安全性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T16:20:40+08:00">
+                2019-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="什么是SUHOSIN？"><a href="#什么是SUHOSIN？" class="headerlink" title="什么是SUHOSIN？"></a>什么是SUHOSIN？</h2><blockquote>
+<p>Suhosin是一个PHP程序的保护系统。主要用于保护服务器和用于抵御PHP程序和PHP核心中，已知或者未知的缺陷。</p>
+</blockquote>
+<h3 id="Suhosin具有两个独立的部分："><a href="#Suhosin具有两个独立的部分：" class="headerlink" title="Suhosin具有两个独立的部分："></a>Suhosin具有两个独立的部分：</h3><ul>
+<li>第一部分用于PHP核心的补丁，它能抵御缓冲区溢出或者格式化串的弱点</li>
+<li>第二部分是一个强大的PHP扩展，包含其他所有的保护措施</li>
+</ul>
+<h2 id="特性列表"><a href="#特性列表" class="headerlink" title="特性列表"></a>特性列表</h2><h3 id="引擎保护（仅补丁）"><a href="#引擎保护（仅补丁）" class="headerlink" title="引擎保护（仅补丁）"></a>引擎保护（仅补丁）</h3><ul>
+<li>保护内部的内存管理抵御缓冲区溢出</li>
+<li>防止Zend哈希表被破坏</li>
+<li>防止Zend链接列表被破坏</li>
+<li>保护PHP核心及其扩展抵御格式化串弱点</li>
+<li>某些libc realpath()产生的错误</li>
+</ul>
+<h3 id="运行保护"><a href="#运行保护" class="headerlink" title="运行保护"></a>运行保护</h3><ul>
+<li>加密cookies</li>
+<li>分级禁止eval()函数</li>
+<li>设置最大执行深度，从而防止无穷递归</li>
+<li>vhost配置黑白名单</li>
+<li>防止mail()函数的新型攻击</li>
+<li>防止preg_replace()的攻击</li>
+</ul>
+<h3 id="session保护"><a href="#session保护" class="headerlink" title="session保护"></a>session保护</h3><ul>
+<li>加密数据</li>
+<li>防止被劫持</li>
+<li>防止超长的 session id</li>
+<li>防止恶意的 session id</li>
+</ul>
+<h3 id="其他特性"><a href="#其他特性" class="headerlink" title="其他特性"></a>其他特性</h3><ul>
+<li>模拟器保护模式</li>
+<li>添加两个函数sha256()和sha256_file()到PHP核心中</li>
+<li>加入CRYPT_BLOWFISH到函数crypt()中</li>
+<li>打开对phpinfo()页的透明保护</li>
+<li>SQL数据库用户保护</li>
+</ul>
+<h2 id="安装方法"><a href="#安装方法" class="headerlink" title="安装方法"></a>安装方法</h2><blockquote>
+<p><a href="https://www.suhosin.org/stories/install.html#" target="_blank" rel="noopener">参照官网</a></p>
+</blockquote>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="三种方式控制eval"><a href="#三种方式控制eval" class="headerlink" title="三种方式控制eval"></a>三种方式控制eval</h3><p>编辑php.ini</p>
+<ul>
+<li>suhosin.executor.eval.whiterlist 白名单</li>
+<li>suhosin.executor.eval.blacklist 黑名单</li>
+<li>suhosin.executor.disable_eval 禁用eval</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[suhosin]</span></span><br><span class="line"></span><br><span class="line"><span class="attr">suhosin.executor.eval.blacklist</span> = phpinfo, fputs, fopen, fwrite</span><br></pre></td></tr></table></figure>
           
         
       
@@ -658,7 +979,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
